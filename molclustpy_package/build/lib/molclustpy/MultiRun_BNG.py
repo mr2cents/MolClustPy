@@ -20,12 +20,13 @@ class BNG_multiTrials:
     and this class will execute 'numRuns' trials upto 't_end' seconds with different seeds
 
     '''
-    def __init__(self, bng_file, numRuns=10, t_end=0.01, steps=10):
+    def __init__(self, bng_file, numRuns=10, t_end=0.01, steps=10, gml=200000):
         
         self.infile = bng_file 
         self.numRuns = numRuns
         self.t_end = t_end 
         self.steps = steps 
+        self.gml = gml
     
     def __repr__(self):
         info = f"\n***** // ***** \nClass : {self.__class__.__name__}\nFile Path : {self.infile}\n\nt_end : {self.t_end} seconds \t output_steps : {self.steps}\nNumber of runs: {self.numRuns}\n"
@@ -66,7 +67,7 @@ class BNG_multiTrials:
             
             for i, bfile in enumerate(bng_files):
                 with open(bfile, 'w') as tf:
-                    lines[-1] = f'simulate_nf({brak_open}t_end=>{self.t_end},n_steps=>{self.steps}, seed=>{seeds[i]}, complex=>0{brak_close})\n'
+                    lines[-1] = f'simulate_nf({brak_open}t_end=>{self.t_end},n_steps=>{self.steps}, gml=>{self.gml}, seed=>{seeds[i]}, complex=>0{brak_close})\n'
                     tf.writelines(lines)
         return bng_files 
     
